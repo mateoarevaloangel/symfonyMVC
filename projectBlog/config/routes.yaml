@@ -6,4 +6,4 @@ app_home:
     controller: App\Controller\Home::say
 app_contact:
     path: /contact
-    controller: App\Controller\Contact::say
+    controller: App\Controller\Contact::new
