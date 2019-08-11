@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Finder\Finder;
+
 
 
 
@@ -25,6 +25,17 @@ class InstrumentController extends AbstractController
     {
         return $this->render('instrument/index.html.twig', [
             'instruments' => $instrumentRepository->findAll(),
+            'instrument' => "",
+        ]);
+    }
+    /**
+     * @Route("/index/{id}", name="instrument_index2", methods={"GET"})
+     */
+    public function index2(InstrumentRepository $instrumentRepository,Instrument $instrument): Response
+    {
+        return $this->render('instrument/index.html.twig', [
+            'instruments' => $instrumentRepository->findAll(),
+            'instrument' => $instrument,
         ]);
     }
 
@@ -37,22 +48,16 @@ class InstrumentController extends AbstractController
         $form = $this->createForm(InstrumentType::class, $instrument);
         $form->handleRequest($request);
 
-        $finder = new Finder();
-        #$finder->files()->in(__DIR__);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $file = $instrument->getImage();
-
-            // Generar un numbre único para el archivo antes de guardarlo
+  
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $ext=$file->guessExtension();
 
-            // Mover el archivo al directorio donde se guardan los curriculums
             $cvDir = $file_name=time().".".$ext;
             $file->move("upload", $fileName);
 
-            #$instrument->setImage($finder->in(__DIR__)->in('/projectBlog'));
             $instrument->setImage($fileName);
 
             $entityManager = $this->getDoctrine()->getManager();

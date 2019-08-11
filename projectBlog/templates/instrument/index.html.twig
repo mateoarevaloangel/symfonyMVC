@@ -3,37 +3,38 @@
 {% block title %}Instrument index{% endblock %}
 
 {% block body %}
-    <h1>Instrument index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for instrument in instruments %}
-            <tr>
-                <td>{{ instrument.id }}</td>
-                <td>{{ instrument.name }}</td>
-                <td>{{ instrument.description }}</td>
-                <td><img src="/upload/{{instrument.image}}"></td>
-                <td>
-                    <a href="{{ path('instrument_show', {'id': instrument.id}) }}">show</a>
-                    <a href="{{ path('instrument_edit', {'id': instrument.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h1>Instrument Musicales</h1>
+    
+    <div class="container-fluid">
+        <div class="row text-white text-center">
+          <div class="container col-2">
+                {% for instrument in instruments %}
+                <a href="{{ path('instrument_index2', {'id': instrument.id}) }}" color="black">{{ instrument.name }}</a>
+                <br>
+                {% else %}
+                <h1>empty</h1>
+                {% endfor %}
+          </div>
+          <div class="container col-10 ">
+                {% if(instrument!="") %}
+                
+                <font color="black">
+                    <h1 class="text-center" color='black'><span >{{ instrument.name }}</span></h1>
+                </font>
+                
+                <font color="black">
+                    <h4>{{ instrument.description }}</h4>
+                </font>
+                <img src="/upload/{{instrument.image}}">
+                <div class="container">
+                    <a href="{{ path('instrument_delete', {'id': instrument.id}) }}" class="btn btn-warnin btn-block">eliminar</a>
+                </div>
+                
+                  {% endif %} 
+          </div>
+    
+        </div>
+    </div>
 
     <a href="{{ path('instrument_new') }}">Create new</a>
 {% endblock %}
