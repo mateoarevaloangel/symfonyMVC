@@ -39,7 +39,7 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('message_index');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('message/new.html.twig', [

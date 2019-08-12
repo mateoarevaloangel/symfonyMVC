@@ -3,7 +3,7 @@
 {% block title %}Instrument index{% endblock %}
 
 {% block body %}
-    <h1>Instrument Musicales</h1>
+    <h1>Instrument </h1>
     
     <div class="container-fluid">
         <div class="row text-white text-center">
@@ -27,7 +27,7 @@
                 </font>
                 <img src="/upload/{{instrument.image}}">
                 <div class="container">
-                    <a href="{{ path('instrument_delete', {'id': instrument.id}) }}" class="btn btn-warnin btn-block">eliminar</a>
+                    <a href="{{ path('instrument_delete', {'id': instrument.id}) }}" class="btn btn-warnin btn-block">accion</a>
                 </div>
                 
                   {% endif %} 

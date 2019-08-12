@@ -9,8 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -88,12 +87,23 @@ class InstrumentController extends AbstractController
      */
     public function edit(Request $request, Instrument $instrument): Response
     {
+        $fileNameBefore='upload/'.$instrument->getImage();
         $form = $this->createForm(InstrumentType::class, $instrument);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            unlink($fileNameBefore);
+            $file = $instrument->getImage();
+  
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $ext=$file->guessExtension();
 
+            $cvDir = $file_name=time().".".$ext;
+            $file->move("upload", $fileName);
+
+            $instrument->setImage($fileName);
+            $this->getDoctrine()->getManager()->flush();
+            
             return $this->redirectToRoute('instrument_index');
         }
 
@@ -110,6 +120,7 @@ class InstrumentController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$instrument->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            #unlink('upload/'.$instrument->getImage());
             $entityManager->remove($instrument);
             $entityManager->flush();
         }
