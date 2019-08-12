@@ -4,7 +4,20 @@
 
 {% block body %}
     <h1>Create new Instrument</h1>
-
+    <div class="container">
+        <div class="row">
+            <div class="cold-md-3">
+                <div class="card-header">
+                    <h3>Form</h3>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        {{ include('instrument/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{ include('instrument/_form.html.twig') }}
 
     <a href="{{ path('instrument_index') }}">back to list</a>

@@ -120,7 +120,7 @@ class InstrumentController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$instrument->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            #unlink('upload/'.$instrument->getImage());
+            unlink('upload/'.$instrument->getImage());
             $entityManager->remove($instrument);
             $entityManager->flush();
         }
